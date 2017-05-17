@@ -1,0 +1,7 @@
+@mixin collapseMargin {
+	&:before,
+	&:after {
+		content: ' ';
+		display: table;
+	}
+}

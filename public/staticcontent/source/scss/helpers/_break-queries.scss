@@ -1,0 +1,45 @@
+$breakpoints-map: (
+	xs: 480,
+	s: 640,
+	m: 768,
+	l: 960,
+	xl: 1180,
+	xxl: 1600
+);
+
+@function get-breakpoints-value($value) {
+	@if (map-has-key($breakpoints-map, $value)) {
+		@return map-get($breakpoints-map, $value);
+	} @else {
+		@return $value;
+	}
+}
+
+@mixin media($value-1: false, $value-2: false) {
+	$query: 0;
+	$query-to: 0;
+	$mod: false;
+	@if($value-2 != false) {
+		$query: get-breakpoints-value($value-1) + 1 + px;
+		$query-to: get-breakpoints-value($value-2) + px;
+		@media screen and (min-width: #{$query}) and (max-width: #{$query-to}) {
+			@content;
+		}
+	} @else {
+		$mod: str-slice($value-1, 0, 1);
+		$query: get-breakpoints-value($value-1) + px;
+		@if ($mod == "<") {
+			@media screen and (max-width: #{$query}) {
+				@content;
+			}
+		} @else {
+			@media screen and (min-width: #{$query}) {
+				@content;
+			}
+		}
+	}
+}
+
+/*
+Проблемма: в мексин нельзя передовать <550 , только "<500"
+так же нужно самом мексине предумать преобразование типов из строки в число

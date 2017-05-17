@@ -1,0 +1,51 @@
+$breakpoints-map: (
+	xs: 480,
+	s: 640,
+	m: 768,
+	l: 960,
+	xl: 1180,
+	xxl: 1600
+);
+
+@function get-breakpoints-value($value) {
+	@if (map-has-key($breakpoints-map, $value)) {
+		@return map-get($breakpoints-map, $value);
+	} @else {
+		@return $value;
+	}
+}
+
+@mixin media($value-1: false, $value-2: false) {
+	$query: 0;
+	$query-to: 0;
+	@if ($value-1 == "from") {
+		$query: get-breakpoints-value($value-2) + px;
+		@media screen and (min-width: #{$query}) {
+			@content;
+		}
+	} @else if ($value-1 == "to") {
+		$query: get-breakpoints-value($value-2) + px;
+		@media screen and (max-width: #{$query}) {
+			@content;
+		}
+	} @else {
+		$query: get-breakpoints-value($value-1) + 1 + px;
+		$query-to: get-breakpoints-value($value-2) + px;
+		@media screen and (min-width: #{$query}) and (max-width: #{$query-to}) {
+			@content;
+		}
+	}
+}
+
+/*
+Использование: 
+@include media 
+(to, xs) => screen and (max-width: 480)
+(to, 500) => screen and (max-width: 500)
+(from, xs) => (min-width: 480)
+(from, 500) => (min-width: 500)
+(xs, s) => (min-width: 481) and (max-width: 640)
+(400, 500) => (min-width: 401) and (max-width: 500)
+(xs, 500) => (min-width: 481) and (max-width: 500)
+*/
+

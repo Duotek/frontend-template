@@ -1,0 +1,66 @@
+/*
+	Пример описания стилей абстрактного блока
+
+	.block--horizontal - горизонтальный блок для широких экранов
+	.block--vertical - вертикальный блок для узких экранов
+*/
+
+
+.block {
+	margin: 0;
+	padding: 0;
+}
+
+.block__element {
+	border: 1px solid;
+}
+
+
+@media screen and (min-width: 700px) {
+	.block {
+		margin: 10px;
+		padding: 10px;
+	}
+
+	.block__element {
+		border: none;
+	}
+}
+
+
+
+.block--horizontal {
+	padding: 50px;
+
+	.block__element {
+		border: none;
+	}
+
+
+	@media screen and (min-width: 700px) {
+		padding: 100px;
+
+		.block__element {
+			border: 10px solid;
+		}
+	}
+}
+
+
+
+.block--vertical {
+	padding: 50px;
+
+	.block__element {
+		border: none;
+	}
+
+
+	@media screen and (min-width: 700px) {
+		padding: 100px;
+
+		.block__element {
+			border: 10px solid;
+		}
+	}
+}
