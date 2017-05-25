@@ -3,6 +3,8 @@
 
 ## Старт
 1. Скачай [последний релиз](//github.com/sashasushko/duotek-frontend/releases) и распакуй в папку проекта
+1.1 В уже созданную папку склонируй репозиторий `git clone https://github.com/Duotek/frontend-template.git .` , затем удали папку .git
+1.2 Открой консоль, перейди в public `cd C:\web\home\frontend-template\public`
 2. Установи зависимости командой `npm install`
 
 ## Запуск
