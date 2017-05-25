@@ -2,10 +2,10 @@
 Шаблон для быстрого старта проекта :rocket:
 
 ## Старт
-1. Скачай [последний релиз](//github.com/sashasushko/duotek-frontend/releases) и распакуй в папку проекта
-1.1 В уже созданную папку склонируй репозиторий `git clone https://github.com/Duotek/frontend-template.git .` , затем удали папку .git
-1.2 Открой консоль, перейди в public `cd C:\web\home\frontend-template\public`
-2. Установи зависимости командой `npm install`
+1. Разверни проект у себя на компьютере одним из вариантов:
+    1. Скачай [последний релиз](//github.com/sashasushko/duotek-frontend/releases) и распакуй в папку проекта.
+    2. В папку проекта склонируй этот репозиторий командой `git clone https://github.com/Duotek/frontend-template.git .`. Удали папку `.git` и файл `.gitignore`.
+2. Открой в терминале папку проекта и установи зависимости командой `npm install`.
 
 ## Запуск
 ```bash
