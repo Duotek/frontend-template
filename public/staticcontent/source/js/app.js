@@ -1,10 +1,21 @@
-/** Все методы и свойства клиентского JS на сайте */
-const APP = {
-	/**
-	 * Добавляет компонент в APP
-	 * @param {object} component
-	 */
-	addComponent: function(component) {
-		this[component.name] = component.method;
-	}
+var app = {
+
+	init: function() {
+
+		/** Описание */
+		// this.tabs.init('.js-tabs'); // без опций
+		// this.chosen.init('select',{disable_search: true}); // с опциями
+
+		this.some();
+
+	},
+
+	some: function() {}
+
 };
+
+//=require components/*
+//=require polyfills/*
+//=require helpers/*
+
+app.init();

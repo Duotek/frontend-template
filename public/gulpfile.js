@@ -20,12 +20,15 @@ let include = require('gulp-include');
 // img
 let spritesmith = require('gulp.spritesmith');
 let merge = require('merge-stream');
+let cache = require('gulp-cache');
+let imagemin = require('gulp-imagemin');
 
 //////////////////
 // pug & stylus //
 //////////////////
 
 // html
+let pugInheritance = require('gulp-pug-inheritance');
 let pug = require('gulp-pug');
 let cached = require('gulp-cached');
 let changed = require('gulp-changed');
@@ -72,12 +75,7 @@ let path = {
 	},
 
 	js: {
-		source: [
-			'./staticcontent/source/js/polyfills/*.js',
-			'./staticcontent/source/js/helpers/*.js',
-			'./staticcontent/source/js/components/*.js',
-			'./staticcontent/source/js/app.js'
-		],
+		source: './staticcontent/source/js/app.js',
 		dest: {
 			public: './staticcontent/js',
 			markup: '../markup/staticcontent/js'
@@ -89,12 +87,13 @@ let path = {
 				markup: '../markup/staticcontent/js'
 			},
 		},
-		watch: 'staticcontent/source/js/**/*.js'
+		watch: './staticcontent/source/js/**/*.js'
 	},
 
 	sprite: {
 		png: {
 			source: {
+				pic: './staticcontent/source/img/*',
 				x1: './staticcontent/source/img/sprite/png/*.png',
 				x2: './staticcontent/source/img/sprite/png/*@2x.png'
 			},
@@ -103,7 +102,7 @@ let path = {
 					public: './staticcontent/img',
 					markup: '../markup/staticcontent/img',
 				},
-				css: './staticcontent/source/'+prep+'/dist/mixins'
+				css: './staticcontent/source/'+prep+'/helpers'
 			}
 		}
 	}
@@ -126,7 +125,7 @@ gulp.task('browser-sync', function() {
 		],{
 		open: false,
 		notify: false,
-		server: { baseDir: './' }
+		server: { baseDir: '../markup/' }
 	});
 });
 
@@ -136,12 +135,12 @@ gulp.task('pug', function() {
 		.pipe(plumber())
 		.pipe(changed(path.html.basedir, {extension: '.html'}))
 		.pipe(gulpif(global.isWatching, cached('pug')))
+		.pipe(pugInheritance({basedir: path.html.basedir}))
 		.pipe(pug({
 			pretty: '\t', // минификатор html
 			basedir: path.html.basedir
 		}))
-		.pipe(gulp.dest(path.html.destination))
-		.pipe(reload({stream:true}));
+		.pipe(gulp.dest(path.html.destination));
 });
 // приблуда для pug
 gulp.task('setWatch', function() {
@@ -210,6 +209,19 @@ gulp.task('deploy-js', () => {
 		.pipe( gulp.dest( path.js.deploy.dest.markup ) );
 });
 
+gulp.task('img', function() {
+	gulp.src(path.sprite.png.source.pic)
+		.pipe(plumber())
+		.pipe(cache(imagemin({
+			optimizationLevel: 7,
+			progressive: true,
+			interlaced: true,
+			svgoPlugins: [{removeViewBox: false}]
+		})))
+		.pipe(gulp.dest(path.sprite.png.dest.img.public))
+		.pipe(gulp.dest(path.sprite.png.dest.img.markup))
+});
+
 
 gulp.task('sprite-png', () => {
 	let spriteData = gulp.src( path.sprite.png.source.x1 )
@@ -233,12 +245,13 @@ gulp.task('sprite-png', () => {
 
 
 gulp.task('watch', () => {
+	gulp.watch( path.html.watch, ['pug'] );
 	gulp.watch( path.css.watch, ['css'] );
 	gulp.watch( path.js.watch, ['js'] );
 });
 
 
-gulp.task('default', ['sprite-png', 'css', 'js', 'watch']);
+gulp.task('default', ['sprite-png', 'css', 'js', 'watch', 'setWatch', 'browser-sync']);
 
 
 gulp.task('deploy', ['deploy-css', 'deploy-js']);
