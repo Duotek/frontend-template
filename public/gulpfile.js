@@ -226,7 +226,7 @@ gulp.task('img', function() {
 gulp.task('sprite-png', () => {
 	let spriteData = gulp.src( path.sprite.png.source.x1 )
 		.pipe(spritesmith({
-			cssName: '_sprite'+prep,
+			cssName: '_sprite.'+prep,
 			imgName: 'sprite.png',
 			imgPath: '/staticcontent/img/sprite.png',
 			retinaSrcFilter: path.sprite.png.source.x2,
