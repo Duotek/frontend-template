@@ -1,9 +1,9 @@
-# [Duotek Frontend Template](//github.com/sashasushko/duotek-frontend)
+# [Duotek Frontend Template](//github.com/Duotek/frontend-template)
 Шаблон для быстрого старта проекта :rocket:
 
 ## Старт
 1. Разверни проект у себя на компьютере одним из вариантов:
-    1. Скачай [последний релиз](//github.com/sashasushko/duotek-frontend/releases) и распакуй в папку проекта.
+    1. Скачай [последний релиз](//github.com/Duotek/frontend-template/releases) и распакуй в папку проекта.
     2. В папку проекта склонируй этот репозиторий командой `git clone https://github.com/Duotek/frontend-template.git .`. Удали папку `.git` и файл `.gitignore`.
 2. Открой в терминале папку проекта и установи зависимости командой `npm install`.
 
